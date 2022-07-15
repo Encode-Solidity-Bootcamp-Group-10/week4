@@ -71,15 +71,15 @@ NFT 10 minted at Transaction Hash: 0x8c156c5d697bb35bd9f187705186f70ef5c6c610d62
 
 ## The tokenURI method of the contract returns:
 
-```
-http://localhost:3000/api/nften/0
-http://localhost:3000/api/nften/1
-http://localhost:3000/api/nften/2
-http://localhost:3000/api/nften/3
-http://localhost:3000/api/nften/4
-http://localhost:3000/api/nften/5
-http://localhost:3000/api/nften/6
-http://localhost:3000/api/nften/7
-http://localhost:3000/api/nften/8
-http://localhost:3000/api/nften/9
-```
+    ```
+    http://localhost:3000/api/nften/0
+    http://localhost:3000/api/nften/1
+    http://localhost:3000/api/nften/2
+    http://localhost:3000/api/nften/3
+    http://localhost:3000/api/nften/4
+    http://localhost:3000/api/nften/5
+    http://localhost:3000/api/nften/6
+    http://localhost:3000/api/nften/7
+    http://localhost:3000/api/nften/8
+    http://localhost:3000/api/nften/9
+    ```
