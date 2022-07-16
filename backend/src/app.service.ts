@@ -10,7 +10,8 @@ import { createReadStream } from 'fs';
 import { IPFSHTTPClient } from 'ipfs-http-client/types/src/types';
 import { concat as uint8ArrayConcat } from 'uint8arrays/concat';
 
-const DB_PATH = '../db/db.json';
+const DB_PATH = 'db/db.json';
+const port = parseInt(process.env.PORT) || 5001;
 
 @Injectable()
 export class AppService {
@@ -22,7 +23,7 @@ export class AppService {
     this.db = new JsonDB(new Config(DB_PATH, true, true, '/'));
     this.ipfsClient = create({
       host: 'localhost',
-      port: 5001,
+      port: port,
       protocol: 'http',
     });
     const data = this.db.getData('/');
