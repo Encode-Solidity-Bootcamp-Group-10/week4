@@ -8,29 +8,6 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('')
-  @ApiOperation({
-    summary: 'All NFTs metadata',
-    description: 'Gets metadata of all the NFTs',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Database contents',
-  })
-  @ApiResponse({
-    status: 503,
-    description: 'The server is not configured correctly',
-    type: HttpException,
-  })
-  async getAllData() {
-    try {
-      const result = this.appService.getAll();
-      return result;
-    } catch (error) {
-      throw new HttpException(error.message, 503);
-    }
-  }
-
   @Get('api/nften/:id')
   @ApiOperation({
     summary: 'NFT Metadata by id',
