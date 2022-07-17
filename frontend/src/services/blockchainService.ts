@@ -1,9 +1,9 @@
 import { ethers } from "ethers";
 import TokenContract from "../assets/contracts/NFTen.json";
 
-export let provider: ethers.providers.BaseProvider;
-export let userWallet: ethers.Wallet;
-export let tokenContractInstance: ethers.Contract;
+let provider: ethers.providers.BaseProvider;
+let userWallet: ethers.Wallet;
+let tokenContractInstance: ethers.Contract;
 
 export function initBlockchainService() {
   provider = ethers.getDefaultProvider("ropsten");
