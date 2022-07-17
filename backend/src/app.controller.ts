@@ -4,7 +4,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { MetadataDto } from './dtos/metadata.dto';
 
-@ApiTags('NFT Metadata')
+@ApiTags('NFTen Metadata')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
