@@ -1,10 +1,11 @@
-import { Contract, ethers } from "ethers";
+import { Contract } from "ethers"
+import { ethers } from "hardhat";
 import "dotenv/config";
 import * as NFTenJson from "../artifacts/contracts/NFTen.sol/NFTen.json";
 // eslint-disable-next-line node/no-missing-import
 import { NFTen } from "../typechain-types";
 
-if (process.env.PRIVATE_KEY === "" || process.env.MNEMONIC === "") {
+if (process.env.PRIVATE_KEY === "" && process.env.MNEMONIC === "") {
   console.warn("Must provide PRIVATE_KEY or MNEMONIC environment variable");
   process.exit(1);
 }
@@ -15,21 +16,9 @@ if (process.env.INFURA_PROJECT_ID === "") {
 }
 
 async function main() {
-  //  Create wallet
-  const wallet =
-    process.env.MNEMONIC && process.env.MNEMONIC.length > 0
-      ? ethers.Wallet.fromMnemonic(process.env.MNEMONIC)
-      : new ethers.Wallet(process.env.PRIVATE_KEY!);
-  console.log(`Using address ${wallet.address}`);
-
-  //  Create provider and use Infura as provider
-  const provider = new ethers.providers.InfuraProvider(
-    "ropsten",
-    process.env.INFURA_PROJECT_ID
-  );
-
-  //  Create signer - connect wallet to provider
-  const signer = wallet.connect(provider);
+  const provider = ethers.getDefaultProvider()
+  const signers = await ethers.getSigners()
+  const signer = signers[0]
 
   //  Get account balance
   const balanceBN = await signer.getBalance();
@@ -40,18 +29,19 @@ async function main() {
   if (balance < 0.01) {
     throw new Error("Not enough ether");
   }
-  if (process.argv.length < 3)
-    throw new Error("NFTen Contract address missing");
 
-  //  Get mint number and address of contract
+  // first input: address of the NFT contract
+  if (process.argv.length < 3) throw new Error("NFTen Contract address missing");
   const nftenAddress = process.argv[2];
 
+  // second input: number of NFTs that need to be minted
   if (process.argv.length < 4) throw new Error("Mint number missing");
   const mintNumber = Number(process.argv[3]);
 
+  // thrid input: receiving address of the freshly minted NFTs
   if (process.argv.length < 5) throw new Error("Address to Mint missing");
-
   const toAddress = process.argv[4];
+
   console.log(`Attaching Nften contract interface to address ${nftenAddress}`);
 
   //  Use existing contract with contract address, abi and signer
