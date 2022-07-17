@@ -8,8 +8,13 @@ import {
   Progress,
   Alert,
 } from "reactstrap";
-import TokenContract from "./assets/contracts/NFTen.json";
-import { ethers } from "ethers";
+import {
+  init,
+  getContractName,
+  getSymbol,
+  getTokenUriAtIndex,
+} from "./services/blockchainService";
+import { get } from "./services/webService";
 
 function App() {
   const [token, setToken] = useState("");
@@ -18,37 +23,29 @@ function App() {
   const [percentage, setPercentage] = useState(0);
   const [error, setError] = useState("");
 
-  let provider = ethers.getDefaultProvider("ropsten");
-  let userWallet = ethers.Wallet.createRandom().connect(provider);
-  let tokenContractInstance;
-
   async function getNFTs() {
     try {
       let localTokenMetadatas: any = [];
-      setTokenMetadatas([]);
       const totalSupply = parseInt(
         String(process.env.REACT_APP_TOTAL_SUPPLY),
         10
       );
 
-      tokenContractInstance = new ethers.Contract(
-        String(process.env.REACT_APP_NFTEN_CONTRACT),
-        TokenContract.abi
-      ).connect(userWallet);
+      setTokenMetadatas([]);
 
-      const tokenName = await tokenContractInstance["name"]();
+      const tokenName = await getContractName();
       setToken(tokenName);
 
-      const symbol = await tokenContractInstance["symbol"]();
+      const symbol = await getSymbol();
       setSymbol(symbol);
 
       for (let i = 0; i < totalSupply; i++) {
-        const tokenURI = await tokenContractInstance["tokenURI"](i);
-        const response = await fetch(tokenURI);
-        const resJson = await response.json();
+        const tokenURI = await getTokenUriAtIndex(i);
+        const resJson = await get(tokenURI);
         localTokenMetadatas.push(resJson);
         setPercentage(100 * ((i + 1) / totalSupply));
       }
+
       setTokenMetadatas(localTokenMetadatas);
     } catch (e: any) {
       setError(e.message);
@@ -56,6 +53,7 @@ function App() {
   }
 
   useEffect(() => {
+    init();
     getNFTs();
   }, []);
 
@@ -92,7 +90,7 @@ function App() {
                   width: "23rem",
                 }}
               >
-                <img alt="Card image" src={imageUrl} />
+                <img alt={name} src={imageUrl} />
                 <CardBody>
                   <CardTitle tag="h5">{name}</CardTitle>
                   <CardText>{description}</CardText>
