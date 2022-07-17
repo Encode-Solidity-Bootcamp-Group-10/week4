@@ -9,7 +9,7 @@ import {
   Alert,
 } from "reactstrap";
 import {
-  init,
+  initBlockchainService,
   getContractName,
   getSymbol,
   getTokenUriAtIndex,
@@ -53,7 +53,7 @@ function App() {
   }
 
   useEffect(() => {
-    init();
+    initBlockchainService();
     getNFTs();
   }, []);
 
@@ -80,7 +80,7 @@ function App() {
           </div>
         )}
         {tokenMetadatas.map((tokenMetadatas, index) => {
-          const { name, description, cid, attributes } = tokenMetadatas;
+          const { name, description, cid } = tokenMetadatas;
           const imageUrl = `https://ipfs.io/ipfs/${cid}`;
           return (
             <div key={index} className="col">

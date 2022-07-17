@@ -5,7 +5,7 @@ export let provider: ethers.providers.BaseProvider;
 export let userWallet: ethers.Wallet;
 export let tokenContractInstance: ethers.Contract;
 
-export function init() {
+export function initBlockchainService() {
   provider = ethers.getDefaultProvider("ropsten");
   userWallet = ethers.Wallet.createRandom().connect(provider);
   tokenContractInstance = new ethers.Contract(
