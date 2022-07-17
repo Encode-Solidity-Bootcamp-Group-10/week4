@@ -2,6 +2,8 @@
 
 ## 1-Documentation
 
+<img width="782" alt="Screenshot 2022-07-17 at 10 25 31" src="https://user-images.githubusercontent.com/64858288/179392222-80d343d0-47b6-44a6-92ad-807f64972883.png">
+
 ## 2-SmartContract
 
 ### 2.1-Deploy NFT Contract (NFTen)
@@ -92,3 +94,4 @@ NFT 10 minted at Transaction Hash: 0x8c156c5d697bb35bd9f187705186f70ef5c6c610d62
 ![image](https://user-images.githubusercontent.com/1132603/179391378-79e823da-21b9-46f7-80bc-32268433651b.png)
 
 ## 4-Frontend
+![image](https://user-images.githubusercontent.com/1132603/179392272-bbe011ba-a4d4-4c28-99f2-724395683caf.png)
