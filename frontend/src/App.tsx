@@ -8,13 +8,8 @@ import {
   Progress,
   Alert,
 } from "reactstrap";
-import {
-  initBlockchainService,
-  getContractName,
-  getSymbol,
-  getTokenUriAtIndex,
-} from "./services/blockchainService";
-import { get } from "./services/webService";
+import * as blockchainService from "./services/blockchainService";
+import * as webService from "./services/webService";
 
 function App() {
   const [token, setToken] = useState("");
@@ -31,17 +26,21 @@ function App() {
         10
       );
 
-      setTokenMetadatas([]);
-
-      const tokenName = await getContractName();
+      //  Get token name from contract
+      const tokenName = await blockchainService.getContractName();
       setToken(tokenName);
 
-      const symbol = await getSymbol();
+      //  Get token symbol from contract
+      const symbol = await blockchainService.getSymbol();
       setSymbol(symbol);
 
       for (let i = 0; i < totalSupply; i++) {
-        const tokenURI = await getTokenUriAtIndex(i);
-        const metadata = await get(tokenURI);
+        //  Get token uri from contract
+        const tokenURI = await blockchainService.getTokenUriAtIndex(i);
+
+        //  Get metadata using tokenUri from server
+        const metadata = await webService.get(tokenURI);
+
         tempMetadatas.push(metadata);
         setLoadingPercentage(100 * ((i + 1) / totalSupply));
       }
@@ -53,7 +52,7 @@ function App() {
   }
 
   useEffect(() => {
-    initBlockchainService();
+    blockchainService.initBlockchainService();
     getNFTs();
   }, []);
 
