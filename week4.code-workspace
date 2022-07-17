@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "./backend",
+		},
+    {
+			"path": "./frontend",
+		},
+    {
+			"path": "./smartcontracts",
+		},
+    {
+			"path": "./docs",
+		},
+    {
+			"path": ".",
+		},
+  ],
+  "settings": {}
+}
