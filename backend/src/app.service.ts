@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JsonDB } from 'node-json-db';
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
+import { MetadataDto } from './dtos/metadata.dto';
 
 const DB_PATH = 'db/db.json';
 
@@ -18,7 +19,7 @@ export class AppService {
         : -1;
   }
 
-  get(fileId: number) {
+  get(fileId: number): Promise<MetadataDto> {
     return this.db.getData(`/${fileId}`);
   }
 }
