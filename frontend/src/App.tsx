@@ -20,12 +20,12 @@ function App() {
   const [token, setToken] = useState("");
   const [symbol, setSymbol] = useState("");
   const [tokenMetadatas, setTokenMetadatas] = useState([]);
-  const [percentage, setPercentage] = useState(0);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
   const [error, setError] = useState("");
 
   async function getNFTs() {
     try {
-      let localTokenMetadatas: any = [];
+      let tempMetadatas: any = [];
       const totalSupply = parseInt(
         String(process.env.REACT_APP_TOTAL_SUPPLY),
         10
@@ -41,12 +41,12 @@ function App() {
 
       for (let i = 0; i < totalSupply; i++) {
         const tokenURI = await getTokenUriAtIndex(i);
-        const resJson = await get(tokenURI);
-        localTokenMetadatas.push(resJson);
-        setPercentage(100 * ((i + 1) / totalSupply));
+        const metadata = await get(tokenURI);
+        tempMetadatas.push(metadata);
+        setLoadingPercentage(100 * ((i + 1) / totalSupply));
       }
 
-      setTokenMetadatas(localTokenMetadatas);
+      setTokenMetadatas(tempMetadatas);
     } catch (e: any) {
       setError(e.message);
     }
@@ -73,9 +73,9 @@ function App() {
         </div>
       </div>
       <div className="row">
-        {percentage !== 0 && percentage < 100 && (
+        {loadingPercentage !== 0 && loadingPercentage < 100 && (
           <div>
-            <Progress animated value={percentage} color="dark" />
+            <Progress animated value={loadingPercentage} color="dark" />
             <small className="text-center">Loading NFTs...</small>
           </div>
         )}
